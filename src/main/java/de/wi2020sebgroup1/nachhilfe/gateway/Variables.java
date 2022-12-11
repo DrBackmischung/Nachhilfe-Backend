@@ -12,6 +12,6 @@ public class Variables {
 	public static final String transportationServiceURL = "http://localhost:5006";
 	public static final String logServiceURL = "http://localhost:5007";
 	public static final String documentExtractionServiceURL = "http://localhost:5008";
-	public static final String chatbot = "http://localhost:8000";
+	public static final String accountingServiceURL = "http://localhost:8000";
 
 }
