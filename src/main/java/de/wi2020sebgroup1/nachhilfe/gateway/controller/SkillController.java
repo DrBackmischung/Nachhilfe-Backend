@@ -1,5 +1,6 @@
 package de.wi2020sebgroup1.nachhilfe.gateway.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -21,11 +22,15 @@ import org.springframework.web.client.RestTemplate;
 import de.wi2020sebgroup1.nachhilfe.gateway.Variables;
 import de.wi2020sebgroup1.nachhilfe.gateway.entities.Skill;
 import de.wi2020sebgroup1.nachhilfe.gateway.entities.User;
+import de.wi2020sebgroup1.nachhilfe.gateway.service.LogService;
 
 @Controller
 @RestController
 @RequestMapping("/skills")
 public class SkillController {
+	
+	@Autowired
+	LogService logger;
 	
 	@GetMapping("")
 	public ResponseEntity<Object> getAll() {
