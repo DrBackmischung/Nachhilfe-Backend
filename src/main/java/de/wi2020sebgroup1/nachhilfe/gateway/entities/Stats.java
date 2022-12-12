@@ -44,8 +44,6 @@ public class Stats {
 		this.profilePoints = profilePoints;
 	}
 	
-	
-	
 	public Stats(int learningPoints, int teachingPoints, int profilePoints) {
 		super();
 		this.learningPoints = learningPoints;
