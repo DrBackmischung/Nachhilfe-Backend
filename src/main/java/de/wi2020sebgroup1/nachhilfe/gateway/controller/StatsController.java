@@ -6,10 +6,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.HttpClientErrorException;
 
+import de.wi2020sebgroup1.nachhilfe.gateway.entities.Stats;
 import de.wi2020sebgroup1.nachhilfe.gateway.service.LogService;
 import graphql.kickstart.spring.webclient.boot.GraphQLRequest;
 import graphql.kickstart.spring.webclient.boot.GraphQLResponse;
@@ -108,6 +112,32 @@ public class StatsController {
 	public ResponseEntity<Object> getPP(@PathVariable String id) {
 		try {
 			GraphQLRequest request = GraphQLRequest.builder().query("query { statByUser(userId: \""+id+"\") { id, userId, profilePoints } }").build();
+			GraphQLResponse response = graphQLWebClient.post(request).block();
+			return new ResponseEntity<Object>(response.getFirst(Object.class), HttpStatus.OK);
+		} catch(HttpClientErrorException e) {
+			e.printStackTrace();
+			return new ResponseEntity<Object>("Server error: "+e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+	}
+	
+	@PostMapping("")
+	public ResponseEntity<Object> save(@RequestBody Stats u) {
+		try {
+			GraphQLRequest request = GraphQLRequest.builder().query("mutation { add(userId: \""+u.getUserId()+"\", registerDate: \""+u.getRegistrationDate()+"\", learningPoints: "+u.getLearningPoints()+", teachingPoints: "+u.getTeachingPoints()+", profilePoints: "+u.getProfilePoints()+") { id, userId, registerDate, learningPoints, teachingPoints, profilePoints } }").build();
+			GraphQLResponse response = graphQLWebClient.post(request).block();
+			return new ResponseEntity<Object>(response.getFirst(Object.class), HttpStatus.OK);
+		} catch(HttpClientErrorException e) {
+			e.printStackTrace();
+			return new ResponseEntity<Object>("Server error: "+e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+	}
+	
+	@PutMapping("/{id}")
+	public ResponseEntity<Object> update(@RequestBody Stats u, @PathVariable String id) {
+		try {
+			GraphQLRequest request = GraphQLRequest.builder().query("mutation { update(id: \""+id+"\", learningPoints: "+u.getLearningPoints()+", teachingPoints: "+u.getTeachingPoints()+", profilePoints: "+u.getProfilePoints()+") { id, userId, registerDate, learningPoints, teachingPoints, profilePoints } }").build();
 			GraphQLResponse response = graphQLWebClient.post(request).block();
 			return new ResponseEntity<Object>(response.getFirst(Object.class), HttpStatus.OK);
 		} catch(HttpClientErrorException e) {

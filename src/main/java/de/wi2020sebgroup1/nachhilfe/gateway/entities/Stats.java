@@ -11,26 +11,26 @@ public class Stats {
 	@Id
 	private String id;
 	private String userId;
-	private String registrationDate;
+	private String registerDate;
 	private int learningPoints;
 	private int teachingPoints;
 	private int profilePoints;
 	
-	public Stats(String id, String userId, String registrationDate, int learningPoints, int teachingPoints,
+	public Stats(String id, String userId, String registerDate, int learningPoints, int teachingPoints,
 			int profilePoints) {
 		super();
 		this.id = id;
 		this.userId = userId;
-		this.registrationDate = registrationDate;
+		this.registerDate = registerDate;
 		this.learningPoints = learningPoints;
 		this.teachingPoints = teachingPoints;
 		this.profilePoints = profilePoints;
 	}
 
-	public Stats(String userId, String registrationDate, int learningPoints, int teachingPoints, int profilePoints) {
+	public Stats(String userId, String registerDate, int learningPoints, int teachingPoints, int profilePoints) {
 		super();
 		this.userId = userId;
-		this.registrationDate = registrationDate;
+		this.registerDate = registerDate;
 		this.learningPoints = learningPoints;
 		this.teachingPoints = teachingPoints;
 		this.profilePoints = profilePoints;
@@ -42,6 +42,19 @@ public class Stats {
 		this.learningPoints = learningPoints;
 		this.teachingPoints = teachingPoints;
 		this.profilePoints = profilePoints;
+	}
+	
+	
+	
+	public Stats(int learningPoints, int teachingPoints, int profilePoints) {
+		super();
+		this.learningPoints = learningPoints;
+		this.teachingPoints = teachingPoints;
+		this.profilePoints = profilePoints;
+	}
+
+	public Stats() {
+		
 	}
 
 	public String getId() {
@@ -61,11 +74,11 @@ public class Stats {
 	}
 
 	public String getRegistrationDate() {
-		return registrationDate;
+		return registerDate;
 	}
 
-	public void setRegistrationDate(String registrationDate) {
-		this.registrationDate = registrationDate;
+	public void setRegistrationDate(String registerDate) {
+		this.registerDate = registerDate;
 	}
 
 	public int getLearningPoints() {
@@ -94,13 +107,13 @@ public class Stats {
 
 	@Override
 	public String toString() {
-		return "Stats [id=" + id + ", userId=" + userId + ", registrationDate=" + registrationDate + ", learningPoints="
+		return "Stats [id=" + id + ", userId=" + userId + ", registerDate=" + registerDate + ", learningPoints="
 				+ learningPoints + ", teachingPoints=" + teachingPoints + ", profilePoints=" + profilePoints + "]";
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, learningPoints, profilePoints, registrationDate, teachingPoints, userId);
+		return Objects.hash(id, learningPoints, profilePoints, registerDate, teachingPoints, userId);
 	}
 
 	@Override
@@ -113,7 +126,7 @@ public class Stats {
 			return false;
 		Stats other = (Stats) obj;
 		return Objects.equals(id, other.id) && learningPoints == other.learningPoints
-				&& profilePoints == other.profilePoints && Objects.equals(registrationDate, other.registrationDate)
+				&& profilePoints == other.profilePoints && Objects.equals(registerDate, other.registerDate)
 				&& teachingPoints == other.teachingPoints && Objects.equals(userId, other.userId);
 	}
 	
