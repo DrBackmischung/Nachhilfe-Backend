@@ -41,6 +41,11 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
+		<dependency>
+		    <groupId>com.graphql-java-kickstart</groupId>
+			<artifactId>graphql-webclient-spring-boot-starter</artifactId>
+		    <version>1.0.0</version>
+		</dependency>
 	</dependencies>
 
 	<build>
