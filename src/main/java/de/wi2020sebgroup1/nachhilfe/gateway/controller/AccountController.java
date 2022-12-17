@@ -7,7 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.HttpClientErrorException;
@@ -26,7 +26,7 @@ public class AccountController {
 	@Autowired
 	LogService logger;
 	
-	@GetMapping("/login")
+	@PutMapping("/login")
 	public ResponseEntity<Object> login(@RequestBody Login l) {
 		
 		RestTemplate t = new RestTemplate();
@@ -54,7 +54,7 @@ public class AccountController {
 		
 	}
 	
-	@GetMapping("/register")
+	@PutMapping("/register")
 	public ResponseEntity<Object> register(@RequestBody Registration r) {
 		
 		RestTemplate t = new RestTemplate();

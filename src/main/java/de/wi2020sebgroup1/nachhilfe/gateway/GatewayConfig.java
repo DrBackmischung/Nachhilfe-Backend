@@ -38,18 +38,7 @@ public class GatewayConfig {
 		   CorsConfiguration configuration = new CorsConfiguration();
 		
 		   configuration.setAllowedOrigins(Arrays.asList(
-		   		"https://wi2020seb-cinema.azurewebsites.net/",
-				"https://wi2020seb-cinema.azurewebsites-dev.net/",
-				"https://kino-frontend.vercel.app/",
-				"https://kino-frontend-*-.vercel.app/",
-				"https://localhost/",
-				"https://localhost:3000/",
-				"https://localhost:3001/",
-				"https://localhost:3002/",
-				"http://localhost/",
-				"http://localhost:3000/",
-				"http://localhost:3001/",
-				"http://localhost:3002/"));
+		   		"http://localhost:19006"));
 		   configuration.setAllowedMethods(Arrays.asList("HEAD", "GET", "PUT", "DELETE", "PATCH"));
 		   configuration.setAllowCredentials(true);
 		   configuration.setAllowedHeaders(Arrays.asList("*"));
