@@ -26,6 +26,21 @@ public class AccountController {
 	@Autowired
 	LogService logger;
 	
+//	@GetMapping("/check/{ip}")
+//	public ResponseEntity<String> check(@PathVariable String ip) {
+//		
+//		try {
+//			CheckLogin l = repo.findById(ip).get();
+//			return new ResponseEntity<String>(l.getUserName(), HttpStatus.OK);
+//		}
+//		catch(NoSuchElementException e) {
+//			CheckLogin l = new CheckLogin(ip, "");
+//			repo.save(l);
+//			return new ResponseEntity<String>("", HttpStatus.OK);
+//		}
+//		
+//	}
+	
 	@PutMapping("/login")
 	public ResponseEntity<Object> login(@RequestBody Login l) {
 		
@@ -37,6 +52,17 @@ public class AccountController {
 		try {
 			ResponseEntity<Object> result = t.postForEntity(URL, entity, Object.class);
 			logger.log(new Log("Login", "Logged in", "Info", "UserService", null, null));
+			
+//			try {
+//				CheckLogin lu = repo.findById(ip).get();
+//				lu.setUserName(l.getUserName());
+//				repo.save(lu);
+//			}
+//			catch(NoSuchElementException e) {
+//				CheckLogin lu = new CheckLogin(ip, l.getUserName());
+//				repo.save(lu);
+//			}
+			
 			return new ResponseEntity<Object>(result.getBody(), result.getStatusCode());
 		} catch(HttpClientErrorException e) {
 			if(e.getMessage().contains("404")) {
