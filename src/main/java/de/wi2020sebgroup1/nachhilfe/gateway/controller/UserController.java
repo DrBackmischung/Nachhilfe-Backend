@@ -73,6 +73,29 @@ public class UserController {
 		
 	}
 	
+	@GetMapping("/{id}/skills")
+	public ResponseEntity<Object> getSkills(@PathVariable String id) {
+		
+		RestTemplate t = new RestTemplate();
+		String URL = Variables.userServiceURL+"/users/"+id+"/skills";
+		logger.log(new Log("Query skills", "Skills for user "+id+" will be queried", "Info", "UserService", null, null));
+		try {
+			ResponseEntity<Object> result = t.getForEntity(URL, Object.class);
+			logger.log(new Log("Query skills", "Skills for user \"+id+\" were queried", "Info", "UserService", null, null));
+			return new ResponseEntity<Object>(result.getBody(), result.getStatusCode());
+		} catch(HttpClientErrorException e) {
+			if(e.getMessage().contains("404")) {
+				logger.log(new Log("Query skills", "user was not found", "Warning", "UserService", null, null));
+				return new ResponseEntity<Object>("User not found", HttpStatus.NOT_FOUND);
+			} else {
+				logger.log(new Log("Query skills", "Was not able to query skills", "Warning", "UserService", null, null));
+				e.printStackTrace();
+				return new ResponseEntity<Object>("Server error: "+e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+		}
+		
+	}
+	
 	@PostMapping("")
 	public ResponseEntity<Object> create(@RequestBody User u) {
 		
@@ -91,6 +114,34 @@ public class UserController {
 				return new ResponseEntity<Object>("Conflicting credentials", HttpStatus.CONFLICT);
 			} else {
 				logger.log(new Log("Create user", "user was not created", "Warning", "UserService", null, null));
+				e.printStackTrace();
+				return new ResponseEntity<Object>("Server error: "+e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+		}
+		
+	}
+	
+	@PostMapping("/{uid}/{sid}")
+	public ResponseEntity<Object> addSkillsToUser(@PathVariable String uid, @PathVariable String sid) {
+		
+		RestTemplate t = new RestTemplate();
+		t.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+		String URL = Variables.userServiceURL+"/users/"+uid+"/"+sid;
+		HttpEntity<Object> entity = new HttpEntity<Object>(null, new HttpHeaders());
+		logger.log(new Log("Add skill to user", "Skill will be added", "Info", "UserService", null, null));
+		try {
+			ResponseEntity<Object> result = t.postForEntity(URL, entity, Object.class);
+			logger.log(new Log("Add skill to user", "Skill was added", "Info", "UserService", null, null));
+			return new ResponseEntity<Object>(result.getBody(), result.getStatusCode());
+		} catch(HttpClientErrorException e) {
+			if(e.getMessage().contains("409")) {
+				logger.log(new Log("Add skill to user", "Conflict", "Warning", "UserService", null, null));
+				return new ResponseEntity<Object>("Conflicting credentials", HttpStatus.CONFLICT);
+			} else if(e.getMessage().contains("404")) {
+				logger.log(new Log("Add skill to user", "Objects for given IDs not found", "Warning", "UserService", null, null));
+				return new ResponseEntity<Object>("Conflicting credentials", HttpStatus.CONFLICT);
+			} else {
+				logger.log(new Log("Add skill to user", "Skill was not added", "Warning", "UserService", null, null));
 				e.printStackTrace();
 				return new ResponseEntity<Object>("Server error: "+e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 			}
@@ -143,6 +194,30 @@ public class UserController {
 				return new ResponseEntity<Object>("User not found", HttpStatus.NOT_FOUND);
 			} else {
 				logger.log(new Log("Delete user", "user was not deleted", "Warning", "UserService", null, null));
+				e.printStackTrace();
+				return new ResponseEntity<Object>("Server error: "+e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+		}
+		
+	}
+	
+	@DeleteMapping("/{uid}/{sid}")
+	public ResponseEntity<Object> unmountSkill(@PathVariable String uid, @PathVariable String sid) {
+		
+		RestTemplate t = new RestTemplate();
+		String URL = Variables.userServiceURL+"/users/"+uid+"/"+sid;
+		HttpEntity<Object> entity = new HttpEntity<Object>(null, new HttpHeaders());
+		logger.log(new Log("Delete skill for user", "skill for user will be deleted", "Info", "UserService", null, null));
+		try {
+			ResponseEntity<Object> result = t.exchange(URL, HttpMethod.DELETE, entity, Object.class);
+			logger.log(new Log("Delete skill for user", "skill for user was deleted", "Info", "UserService", null, null));
+			return new ResponseEntity<Object>(result.getBody(), result.getStatusCode());
+		} catch(HttpClientErrorException e) {
+			if(e.getMessage().contains("404")) {
+				logger.log(new Log("Delete skill for user", "Ressources not found", "Warning", "UserService", null, null));
+				return new ResponseEntity<Object>("User not found", HttpStatus.NOT_FOUND);
+			} else {
+				logger.log(new Log("Delete skill for user", "skill for user was not deleted", "Warning", "UserService", null, null));
 				e.printStackTrace();
 				return new ResponseEntity<Object>("Server error: "+e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 			}

@@ -74,6 +74,29 @@ public class SkillController {
 		
 	}
 	
+	@GetMapping("/{id}/users")
+	public ResponseEntity<Object> getUsers(@PathVariable String id) {
+		
+		RestTemplate t = new RestTemplate();
+		String URL = Variables.userServiceURL+"/skills/"+id+"/users";
+		logger.log(new Log("Query users", "Users for skill "+id+" will be queried", "Info", "UserService", null, null));
+		try {
+			ResponseEntity<Object> result = t.getForEntity(URL, Object.class);
+			logger.log(new Log("Query users", "Users for skill \"+id+\" were queried", "Info", "UserService", null, null));
+			return new ResponseEntity<Object>(result.getBody(), result.getStatusCode());
+		} catch(HttpClientErrorException e) {
+			if(e.getMessage().contains("404")) {
+				logger.log(new Log("Query users", "skill was not found", "Warning", "UserService", null, null));
+				return new ResponseEntity<Object>("User not found", HttpStatus.NOT_FOUND);
+			} else {
+				logger.log(new Log("Query users", "Was not able to query users", "Warning", "UserService", null, null));
+				e.printStackTrace();
+				return new ResponseEntity<Object>("Server error: "+e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+		}
+		
+	}
+	
 	@PostMapping("")
 	public ResponseEntity<Object> create(@RequestBody Skill u) {
 		
