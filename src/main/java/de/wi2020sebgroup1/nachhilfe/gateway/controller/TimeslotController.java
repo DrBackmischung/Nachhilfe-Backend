@@ -82,7 +82,7 @@ public class TimeslotController {
 		HttpEntity<Object> entity = new HttpEntity<Object>(u, new HttpHeaders());
 		logger.log(new Log("Create timeslot", "timeslot will be created", "Info", "TimetableService", null, null));
 		try {
-			ResponseEntity<Object> result = t.postForEntity(URL, entity, Object.class);
+			ResponseEntity<Object> result = t.exchange(URL, HttpMethod.POST, entity, Object.class);
 			logger.log(new Log("Create timeslot", "timeslot was created", "Info", "TimetableService", null, null));
 			return new ResponseEntity<Object>(result.getBody(), result.getStatusCode());
 		} catch(HttpClientErrorException e) {

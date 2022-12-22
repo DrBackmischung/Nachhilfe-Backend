@@ -18,11 +18,11 @@ public class Timeslot {
 	private String dauer;
 	private String preis;
 	private String bezahlungErfolgt;
-	private User schueler;
-	private User lehrer;
-	
+	private String schuelerId;
+	private String lehrerId;
+
 	public Timeslot(String id, String datum, String wochentag, String ort, String fach, String uhrzeit, String dauer,
-			String preis, String bezahlungErfolgt, User schueler, User lehrer) {
+			String preis, String bezahlungErfolgt, String schuelerId, String lehrerId) {
 		super();
 		this.id = id;
 		this.datum = datum;
@@ -33,12 +33,12 @@ public class Timeslot {
 		this.dauer = dauer;
 		this.preis = preis;
 		this.bezahlungErfolgt = bezahlungErfolgt;
-		this.schueler = schueler;
-		this.lehrer = lehrer;
+		this.schuelerId = schuelerId;
+		this.lehrerId = lehrerId;
 	}
 
 	public Timeslot(String datum, String wochentag, String ort, String fach, String uhrzeit, String dauer, String preis,
-			String bezahlungErfolgt, User schueler, User lehrer) {
+			String bezahlungErfolgt, String schuelerId, String lehrerId) {
 		super();
 		this.datum = datum;
 		this.wochentag = wochentag;
@@ -48,8 +48,12 @@ public class Timeslot {
 		this.dauer = dauer;
 		this.preis = preis;
 		this.bezahlungErfolgt = bezahlungErfolgt;
-		this.schueler = schueler;
-		this.lehrer = lehrer;
+		this.schuelerId = schuelerId;
+		this.lehrerId = lehrerId;
+	}
+
+	public Timeslot() {
+
 	}
 
 	public String getId() {
@@ -124,32 +128,32 @@ public class Timeslot {
 		this.bezahlungErfolgt = bezahlungErfolgt;
 	}
 
-	public User getSchueler() {
-		return schueler;
+	public String getschuelerId() {
+		return schuelerId;
 	}
 
-	public void setSchueler(User schueler) {
-		this.schueler = schueler;
+	public void setschuelerId(String schuelerId) {
+		this.schuelerId = schuelerId;
 	}
 
-	public User getLehrer() {
-		return lehrer;
+	public String getlehrerId() {
+		return lehrerId;
 	}
 
-	public void setLehrer(User lehrer) {
-		this.lehrer = lehrer;
+	public void setlehrerId(String lehrerId) {
+		this.lehrerId = lehrerId;
 	}
 
 	@Override
 	public String toString() {
 		return "Timeslot [id=" + id + ", datum=" + datum + ", wochentag=" + wochentag + ", ort=" + ort + ", fach="
 				+ fach + ", uhrzeit=" + uhrzeit + ", dauer=" + dauer + ", preis=" + preis + ", bezahlungErfolgt="
-				+ bezahlungErfolgt + ", schueler=" + schueler + ", lehrer=" + lehrer + "]";
+				+ bezahlungErfolgt + ", schuelerId=" + schuelerId + ", lehrerId=" + lehrerId + "]";
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(bezahlungErfolgt, datum, dauer, fach, id, lehrer, ort, preis, schueler, uhrzeit, wochentag);
+		return Objects.hash(bezahlungErfolgt, datum, dauer, fach, id, lehrerId, ort, preis, schuelerId, uhrzeit, wochentag);
 	}
 
 	@Override
@@ -163,9 +167,9 @@ public class Timeslot {
 		Timeslot other = (Timeslot) obj;
 		return Objects.equals(bezahlungErfolgt, other.bezahlungErfolgt) && Objects.equals(datum, other.datum)
 				&& Objects.equals(dauer, other.dauer) && Objects.equals(fach, other.fach)
-				&& Objects.equals(id, other.id) && Objects.equals(lehrer, other.lehrer)
+				&& Objects.equals(id, other.id) && Objects.equals(lehrerId, other.lehrerId)
 				&& Objects.equals(ort, other.ort) && Objects.equals(preis, other.preis)
-				&& Objects.equals(schueler, other.schueler) && Objects.equals(uhrzeit, other.uhrzeit)
+				&& Objects.equals(schuelerId, other.schuelerId) && Objects.equals(uhrzeit, other.uhrzeit)
 				&& Objects.equals(wochentag, other.wochentag);
 	}
 

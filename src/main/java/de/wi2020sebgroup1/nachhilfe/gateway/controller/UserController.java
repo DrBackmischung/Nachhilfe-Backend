@@ -139,7 +139,7 @@ public class UserController {
 				return new ResponseEntity<Object>("Conflicting credentials", HttpStatus.CONFLICT);
 			} else if(e.getMessage().contains("404")) {
 				logger.log(new Log("Add skill to user", "Objects for given IDs not found", "Warning", "UserService", null, null));
-				return new ResponseEntity<Object>("Conflicting credentials", HttpStatus.CONFLICT);
+				return new ResponseEntity<Object>("Objects for given IDs not found", HttpStatus.CONFLICT);
 			} else {
 				logger.log(new Log("Add skill to user", "Skill was not added", "Warning", "UserService", null, null));
 				e.printStackTrace();

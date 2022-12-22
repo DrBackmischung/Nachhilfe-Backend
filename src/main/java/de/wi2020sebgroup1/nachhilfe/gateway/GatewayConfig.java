@@ -39,7 +39,7 @@ public class GatewayConfig {
 		
 		   configuration.setAllowedOrigins(Arrays.asList(
 		   		"http://localhost:19006"));
-		   configuration.setAllowedMethods(Arrays.asList("HEAD", "GET", "PUT", "DELETE", "PATCH"));
+		   configuration.setAllowedMethods(Arrays.asList("HEAD", "GET", "PUT", "DELETE", "PATCH", "POST"));
 		   configuration.setAllowCredentials(true);
 		   configuration.setAllowedHeaders(Arrays.asList("*"));
 		
