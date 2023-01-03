@@ -54,6 +54,10 @@ public class Timeslot {
 		this.lehrerId = lehrerId;
 		this.distanz = distanz;
 	}
+	
+	public Timeslot() {
+		
+	}
 
 	public String getId() {
 		return id;
