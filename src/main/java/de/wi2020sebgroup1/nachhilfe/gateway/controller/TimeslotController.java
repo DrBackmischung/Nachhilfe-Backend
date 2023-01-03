@@ -50,6 +50,75 @@ public class TimeslotController {
 		
 	}
 	
+	@GetMapping("/schueler/{id}")
+	public ResponseEntity<Object> getSchueler(@PathVariable String id) {
+		
+		RestTemplate t = new RestTemplate();
+		String URL = Variables.timetableServiceURL+"/timeslots/schueler/"+id;
+		logger.log(new Log("Query timeslot", "Timeslots for student "+id+" will be queried", "Info", "TimetableService", null, null));
+		try {
+			ResponseEntity<Object> result = t.getForEntity(URL, Object.class);
+			logger.log(new Log("Query timeslot", "Timeslots were queried", "Info", "TimetableService", null, null));
+			return new ResponseEntity<Object>(result.getBody(), result.getStatusCode());
+		} catch(HttpClientErrorException e) {
+			if(e.getMessage().contains("404")) {
+				logger.log(new Log("Query timeslot", "timeslots were not found", "Warning", "TimetableService", null, null));
+				return new ResponseEntity<Object>("Timeslot not found", HttpStatus.NOT_FOUND);
+			} else {
+				logger.log(new Log("Query timeslot", "Was not able to query timeslots", "Warning", "TimetableService", null, null));
+				e.printStackTrace();
+				return new ResponseEntity<Object>("Server error: "+e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+		}
+		
+	}
+	
+	@GetMapping("/lehrer/{id}")
+	public ResponseEntity<Object> getLehrer(@PathVariable String id) {
+		
+		RestTemplate t = new RestTemplate();
+		String URL = Variables.timetableServiceURL+"/timeslots/lehrer/"+id;
+		logger.log(new Log("Query timeslot", "Timeslots for teacher "+id+" will be queried", "Info", "TimetableService", null, null));
+		try {
+			ResponseEntity<Object> result = t.getForEntity(URL, Object.class);
+			logger.log(new Log("Query timeslot", "Timeslots were queried", "Info", "TimetableService", null, null));
+			return new ResponseEntity<Object>(result.getBody(), result.getStatusCode());
+		} catch(HttpClientErrorException e) {
+			if(e.getMessage().contains("404")) {
+				logger.log(new Log("Query timeslot", "timeslots were not found", "Warning", "TimetableService", null, null));
+				return new ResponseEntity<Object>("Timeslot not found", HttpStatus.NOT_FOUND);
+			} else {
+				logger.log(new Log("Query timeslot", "Was not able to query timeslots", "Warning", "TimetableService", null, null));
+				e.printStackTrace();
+				return new ResponseEntity<Object>("Server error: "+e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+		}
+		
+	}
+	
+	@GetMapping("/skill/{id}")
+	public ResponseEntity<Object> getSkill(@PathVariable String id) {
+		
+		RestTemplate t = new RestTemplate();
+		String URL = Variables.timetableServiceURL+"/timeslots/skill/"+id;
+		logger.log(new Log("Query timeslot", "Timeslots for skill "+id+" will be queried", "Info", "TimetableService", null, null));
+		try {
+			ResponseEntity<Object> result = t.getForEntity(URL, Object.class);
+			logger.log(new Log("Query timeslot", "Timeslots were queried", "Info", "TimetableService", null, null));
+			return new ResponseEntity<Object>(result.getBody(), result.getStatusCode());
+		} catch(HttpClientErrorException e) {
+			if(e.getMessage().contains("404")) {
+				logger.log(new Log("Query timeslot", "timeslots were not found", "Warning", "TimetableService", null, null));
+				return new ResponseEntity<Object>("Timeslot not found", HttpStatus.NOT_FOUND);
+			} else {
+				logger.log(new Log("Query timeslot", "Was not able to query timeslots", "Warning", "TimetableService", null, null));
+				e.printStackTrace();
+				return new ResponseEntity<Object>("Server error: "+e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+		}
+		
+	}
+	
 	@GetMapping("/{id}")
 	public ResponseEntity<Object> get(@PathVariable String id) {
 		
