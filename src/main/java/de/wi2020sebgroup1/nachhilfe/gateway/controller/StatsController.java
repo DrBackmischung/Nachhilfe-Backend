@@ -35,7 +35,7 @@ public class StatsController {
 	public ResponseEntity<Object> getAll() {
 		try {
 			logger.log(new Log("Query stats", "Query all stats", "Info", "GamificationService", null, null));
-			GraphQLRequest request = GraphQLRequest.builder().query("query { stats { id, userId, registerDate, learningPoints, teachingPoints, profilePoints } }").build();
+			GraphQLRequest request = GraphQLRequest.builder().query("query { stats { id, userId, registerDate, learningPoints, teachingPoints, profilePoints, mc1, mc2, mc3 } }").build();
 			GraphQLResponse response = graphQLWebClient.post(request).block();
 			logger.log(new Log("Query stats", "All stats queried", "Info", "GamificationService", null, null));
 			return new ResponseEntity<Object>(response.getFirstList(Object.class), HttpStatus.OK);
@@ -51,7 +51,7 @@ public class StatsController {
 	public ResponseEntity<Object> getById(@PathVariable String id) {
 		try {
 			logger.log(new Log("Query stats", "Query stats from a user", "Info", "GamificationService", null, null));
-			GraphQLRequest request = GraphQLRequest.builder().query("query { stat(id: \""+id+"\") { id, userId, registerDate, learningPoints, teachingPoints, profilePoints } }").build();
+			GraphQLRequest request = GraphQLRequest.builder().query("query { stat(id: \""+id+"\") { id, userId, registerDate, learningPoints, teachingPoints, profilePoints, mc1, mc2, mc3 } }").build();
 			GraphQLResponse response = graphQLWebClient.post(request).block();
 			logger.log(new Log("Update stats", "Stat object was queried", "Info", "GamificationService", null, null));
 			return new ResponseEntity<Object>(response.getFirst(Object.class), HttpStatus.OK);
@@ -67,7 +67,7 @@ public class StatsController {
 	public ResponseEntity<Object> getByUser(@PathVariable String id) {
 		try {
 			logger.log(new Log("Query stats", "Query stats from a user", "Info", "GamificationService", null, null));
-			GraphQLRequest request = GraphQLRequest.builder().query("query { statByUser(userId: \""+id+"\") { id, userId, registerDate, learningPoints, teachingPoints, profilePoints } }").build();
+			GraphQLRequest request = GraphQLRequest.builder().query("query { statByUser(userId: \""+id+"\") { id, userId, registerDate, learningPoints, teachingPoints, profilePoints, mc1, mc2, mc3 } }").build();
 			GraphQLResponse response = graphQLWebClient.post(request).block();
 			logger.log(new Log("Update stats", "Stat object was queried", "Info", "GamificationService", null, null));
 			return new ResponseEntity<Object>(response.getFirst(Object.class), HttpStatus.OK);
@@ -143,11 +143,27 @@ public class StatsController {
 		
 	}
 	
+	@GetMapping("/user/{id}/mc")
+	public ResponseEntity<Object> getMC(@PathVariable String id) {
+		try {
+			logger.log(new Log("Query stats", "Query stats from a user", "Info", "GamificationService", null, null));
+			GraphQLRequest request = GraphQLRequest.builder().query("query { statByUser(userId: \""+id+"\") { id, userId, mc1, mc2, mc3 } }").build();
+			GraphQLResponse response = graphQLWebClient.post(request).block();
+			logger.log(new Log("Update stats", "Stat object was queried", "Info", "GamificationService", null, null));
+			return new ResponseEntity<Object>(response.getFirst(Object.class), HttpStatus.OK);
+		} catch(HttpClientErrorException e) {
+			logger.log(new Log("Query stats", "Error querying stats", "Warning", "GamificationService", null, null));
+			e.printStackTrace();
+			return new ResponseEntity<Object>("Server error: "+e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+	}
+	
 	@PostMapping("")
 	public ResponseEntity<Object> save(@RequestBody Stats u) {
 		try {
 			logger.log(new Log("Create stats", "Create stats for a user", "Info", "GamificationService", null, null));
-			GraphQLRequest request = GraphQLRequest.builder().query("mutation { add(userId: \""+u.getUserId()+"\", registerDate: \""+u.getRegistrationDate()+"\", learningPoints: "+u.getLearningPoints()+", teachingPoints: "+u.getTeachingPoints()+", profilePoints: "+u.getProfilePoints()+") { id, userId, registerDate, learningPoints, teachingPoints, profilePoints } }").build();
+			GraphQLRequest request = GraphQLRequest.builder().query("mutation { add(userId: \""+u.getUserId()+"\", registerDate: \""+u.getRegistrationDate()+"\", learningPoints: "+u.getLearningPoints()+", teachingPoints: "+u.getTeachingPoints()+", profilePoints: "+u.getProfilePoints()+", mc1: "+u.getMc1()+", mc2: "+u.getMc2()+", mc3: "+u.getMc3()+") { id, userId, registerDate, learningPoints, teachingPoints, profilePoints, mc1, mc2, mc3 } }").build();
 			GraphQLResponse response = graphQLWebClient.post(request).block();
 			logger.log(new Log("Update stats", "Stat object was created", "Info", "GamificationService", null, null));
 			return new ResponseEntity<Object>(response.getFirst(Object.class), HttpStatus.OK);
@@ -163,7 +179,7 @@ public class StatsController {
 	public ResponseEntity<Object> update(@RequestBody Stats u, @PathVariable String id) {
 		try {
 			logger.log(new Log("Update stats", "Update stats for a user", "Info", "GamificationService", null, null));
-			GraphQLRequest request = GraphQLRequest.builder().query("mutation { update(id: \""+id+"\", learningPoints: "+u.getLearningPoints()+", teachingPoints: "+u.getTeachingPoints()+", profilePoints: "+u.getProfilePoints()+") { id, userId, registerDate, learningPoints, teachingPoints, profilePoints } }").build();
+			GraphQLRequest request = GraphQLRequest.builder().query("mutation { update(userId: \""+id+"\", learningPoints: "+u.getLearningPoints()+", teachingPoints: "+u.getTeachingPoints()+", profilePoints: "+u.getProfilePoints()+", mc1: "+u.getMc1()+", mc2: "+u.getMc2()+", mc3: "+u.getMc3()+") { id, userId, registerDate, learningPoints, teachingPoints, profilePoints, mc1, mc2, mc3 } }").build();
 			GraphQLResponse response = graphQLWebClient.post(request).block();
 			logger.log(new Log("Update stats", "Stat object was updated", "Info", "GamificationService", null, null));
 			return new ResponseEntity<Object>(response.getFirst(Object.class), HttpStatus.OK);
