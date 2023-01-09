@@ -38,7 +38,8 @@ public class GatewayConfig {
 		   CorsConfiguration configuration = new CorsConfiguration();
 		
 		   configuration.setAllowedOrigins(Arrays.asList(
-		   		"http://localhost:19006"));
+				   "http://localhost:19006",
+				   "http://localhost:25565"));
 		   configuration.setAllowedMethods(Arrays.asList("HEAD", "GET", "PUT", "DELETE", "PATCH", "POST"));
 		   configuration.setAllowCredentials(true);
 		   configuration.setAllowedHeaders(Arrays.asList("*"));
