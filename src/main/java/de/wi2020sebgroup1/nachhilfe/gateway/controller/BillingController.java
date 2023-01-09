@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.HttpClientErrorException;
@@ -25,7 +26,7 @@ public class BillingController {
 	@Autowired
 	LogService logger;
 	
-	@GetMapping("/billing")
+	@PutMapping("/billing")
 	public ResponseEntity<Object> sendMail(@RequestBody Bill u) {
 		
 		RestTemplate t = new RestTemplate();

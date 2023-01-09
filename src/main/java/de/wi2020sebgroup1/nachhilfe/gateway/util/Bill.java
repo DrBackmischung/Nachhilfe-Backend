@@ -6,24 +6,21 @@ public class Bill {
 	
 	private String name;
 	private String mail;
-	private String street;
-	private String houseNr;
-	private String zipCode;
-	private String city;
+	private String address;
 	private String article;
 	private String price;
 	
-	public Bill(String name, String mail, String street, String houseNr, String zipCode, String city, String article,
-			String price) {
+	public Bill(String name, String mail, String address, String article, String price) {
 		super();
 		this.name = name;
 		this.mail = mail;
-		this.street = street;
-		this.houseNr = houseNr;
-		this.zipCode = zipCode;
-		this.city = city;
+		this.address = address;
 		this.article = article;
 		this.price = price;
+	}
+	
+	public Bill() {
+		
 	}
 
 	public String getName() {
@@ -42,36 +39,12 @@ public class Bill {
 		this.mail = mail;
 	}
 
-	public String getStreet() {
-		return street;
+	public String getAddress() {
+		return address;
 	}
 
-	public void setStreet(String street) {
-		this.street = street;
-	}
-
-	public String getHouseNr() {
-		return houseNr;
-	}
-
-	public void setHouseNr(String houseNr) {
-		this.houseNr = houseNr;
-	}
-
-	public String getZipCode() {
-		return zipCode;
-	}
-
-	public void setZipCode(String zipCode) {
-		this.zipCode = zipCode;
-	}
-
-	public String getCity() {
-		return city;
-	}
-
-	public void setCity(String city) {
-		this.city = city;
+	public void setAddress(String address) {
+		this.address = address;
 	}
 
 	public String getArticle() {
@@ -92,13 +65,13 @@ public class Bill {
 
 	@Override
 	public String toString() {
-		return "Bill [name=" + name + ", mail=" + mail + ", street=" + street + ", houseNr=" + houseNr + ", zipCode="
-				+ zipCode + ", city=" + city + ", article=" + article + ", price=" + price + "]";
+		return "Bill [name=" + name + ", mail=" + mail + ", address=" + address + ", article=" + article + ", price="
+				+ price + "]";
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(article, city, houseNr, mail, name, price, street, zipCode);
+		return Objects.hash(address, article, mail, name, price);
 	}
 
 	@Override
@@ -110,10 +83,9 @@ public class Bill {
 		if (getClass() != obj.getClass())
 			return false;
 		Bill other = (Bill) obj;
-		return Objects.equals(article, other.article) && Objects.equals(city, other.city)
-				&& Objects.equals(houseNr, other.houseNr) && Objects.equals(mail, other.mail)
-				&& Objects.equals(name, other.name) && Objects.equals(price, other.price)
-				&& Objects.equals(street, other.street) && Objects.equals(zipCode, other.zipCode);
+		return Objects.equals(address, other.address) && Objects.equals(article, other.article)
+				&& Objects.equals(mail, other.mail) && Objects.equals(name, other.name)
+				&& Objects.equals(price, other.price);
 	}
 
 }
